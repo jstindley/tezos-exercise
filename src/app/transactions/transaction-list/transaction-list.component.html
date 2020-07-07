@@ -1,1 +1,9 @@
 <p>transaction-list works! YAY</p>
+<div>
+    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <div *cdkVirtualFor="let item of items" class="example-item">
+            {{item.first}} | {{item.second}} | {{item.third}}
+        
+        </div>
+    </cdk-virtual-scroll-viewport>
+</div>

@@ -8,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class TransactionListComponent implements OnInit {
 
   constructor() { }
+  woo = { first: 1, second: 2, third: 3};
+  items = [this.woo, this.woo, this.woo, this.woo, this.woo, this.woo, this.woo];
 
   ngOnInit(): void {
+
   }
 
 }
