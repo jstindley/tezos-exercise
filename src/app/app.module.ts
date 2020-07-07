@@ -8,11 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TransactionsModule } from 'src/app/transactions/transactions.module';
 import { environment } from 'src/environments/environment';
 import { ShellComponent } from './home/shell/shell.component';
+import { HeaderComponent } from './home/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShellComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
