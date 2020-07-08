@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Transaction } from '../transaction';
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',
@@ -8,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
 export class TransactionListComponent implements OnInit {
 
   constructor() { }
-  woo = { first: 1, second: 2, third: 3};
-  items = [this.woo, this.woo, this.woo, this.woo, this.woo, this.woo, this.woo];
+
+  transactions: Transaction[] = [];
 
   ngOnInit(): void {
-
+    const woo: Transaction = {
+      row_id: 1,
+      date: new Date('1/2/2020'),
+      amount: 100,
+      type: 'transaction',
+      address: '17th street'
+    };
+    this.transactions.push(woo);
   }
 
 }
