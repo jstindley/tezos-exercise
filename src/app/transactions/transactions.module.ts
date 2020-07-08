@@ -7,6 +7,8 @@ import { CdkScrollableModule } from '@angular/cdk/scrolling';
 import { TransactionRowComponent } from './transaction-row/transaction-row.component';
 import { TransactionsService } from './services/transactions.service';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+
 
 const transactionRoutes: Routes = [
   { path: '', component: TransactionListComponent}
@@ -19,7 +21,8 @@ const transactionRoutes: Routes = [
     ScrollingModule,
     CdkScrollableModule,
     HttpClientModule,
-    RouterModule.forChild(transactionRoutes)
+    RouterModule.forChild(transactionRoutes),
+    StoreModule.forFeature('transactions', {})
   ],
   providers: [TransactionsService]
 })

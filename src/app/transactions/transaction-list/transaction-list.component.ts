@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../transaction';
+import { TransactionsService } from '../services/transactions.service';
+import { Store } from '@ngrx/store';
+
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',
@@ -7,10 +10,10 @@ import { Transaction } from '../transaction';
 })
 export class TransactionListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ts: TransactionsService, private store: Store<any>) { }
 
   transactions: Transaction[] = [];
-
+  apiData = [];
   ngOnInit(): void {
     const woo: Transaction = {
       row_id: 1,
@@ -19,7 +22,18 @@ export class TransactionListComponent implements OnInit {
       type: 'transaction',
       address: '17th street'
     };
-    this.transactions.push(woo);
+    for (let i = 0; i < 10; i++) {
+      this.transactions.push(woo);
+    }
+    this.getApiData();
+  }
+
+  getApiData(): void {
+    this.ts.getTransactions().subscribe(
+      transactions => {
+        console.log(transactions);
+      }
+    );
   }
 
 }
