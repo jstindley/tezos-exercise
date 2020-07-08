@@ -5,7 +5,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkScrollableModule } from '@angular/cdk/scrolling';
 import { TransactionRowComponent } from './transaction-row/transaction-row.component';
-
+import { TransactionsService } from './services/transactions.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const transactionRoutes: Routes = [
   { path: '', component: TransactionListComponent}
@@ -17,7 +18,9 @@ const transactionRoutes: Routes = [
     CommonModule,
     ScrollingModule,
     CdkScrollableModule,
+    HttpClientModule,
     RouterModule.forChild(transactionRoutes)
-  ]
+  ],
+  providers: [TransactionsService]
 })
 export class TransactionsModule { }
