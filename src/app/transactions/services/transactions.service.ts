@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Transaction } from '../transaction';
 
 @Injectable()
 export class TransactionsService {
-
+  private transactionsUrl = 'https://api.tzstats.com/tables/op?columns=row_id,type,volume,time,sender&receiver=tz1gfArv665EUkSg2ojMBzcbfwuPxAvqPvjo&type=transaction&limit=10';
   constructor(private http: HttpClient) { }
 
-  getTransactions(cursor?, limit = 10): Observable<any> {
-    let power = `https://api.tzstats.com/tables/op?columns=row_id,type,volume,time,sender&receiver=tz1gfArv665EUkSg2ojMBzcbfwuPxAvqPvjo&type=transaction&limit=${limit}`;
+  getTransactions(cursor?): Observable<Transaction[]> {
+    let url = this.transactionsUrl;
     if (cursor) {
-      power += `&cursor.lte=${cursor}`;
+      url += `&cursor.lte=${cursor}`;
     }
-    return this.http.get(power);
+    return this.http.get<Transaction[]>(url);
   }
 }

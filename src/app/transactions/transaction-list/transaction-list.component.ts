@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../transaction';
 import { TransactionsService } from '../services/transactions.service';
 import { Store } from '@ngrx/store';
+import { State } from '../state/transaction-interface';
+import * as TransactionActions from '../state/transaction.actions';
+import { getTransactions } from '../state/transaction.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-list',
@@ -9,31 +13,16 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./transaction-list.component.scss']
 })
 export class TransactionListComponent implements OnInit {
+  transactions$: Observable<Transaction[]>;
 
-  constructor(private ts: TransactionsService, private store: Store<any>) { }
+  constructor(private ts: TransactionsService, private store: Store<State>) { }
 
   transactions: Transaction[] = [];
   apiData = [];
-  ngOnInit(): void {
-    const woo: Transaction = {
-      row_id: 1,
-      date: new Date('1/2/2020'),
-      amount: 100,
-      type: 'transaction',
-      address: '17th street'
-    };
-    for (let i = 0; i < 10; i++) {
-      this.transactions.push(woo);
-    }
-    this.getApiData();
-  }
 
-  getApiData(): void {
-    this.ts.getTransactions().subscribe(
-      transactions => {
-        console.log(transactions);
-      }
-    );
+  ngOnInit(): void {
+  this.store.dispatch(TransactionActions.loadTransactions());
+  this.transactions$ = this.store.select(getTransactions);
   }
 
 }

@@ -1,8 +1,6 @@
 <p>transaction-list works! YAY</p>
 <div>
-    <cdk-virtual-scroll-viewport itemSize="10" class="example-viewport">    
-        <!-- <div *cdkVirtualFor="let transaction of transactions" class="example-item"> -->
-            <app-transaction-row *cdkVirtualFor="let transaction of transactions" [transaction]="transaction"></app-transaction-row>
-        <!-- </div> -->
+    <cdk-virtual-scroll-viewport itemSize="10" class="example-viewport"> 
+        <app-transaction-row *cdkVirtualFor="let transaction of transactions$ | async" [transaction]="transaction"></app-transaction-row>
     </cdk-virtual-scroll-viewport>
 </div>

@@ -8,7 +8,9 @@ import { TransactionRowComponent } from './transaction-row/transaction-row.compo
 import { TransactionsService } from './services/transactions.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-
+import { EffectsModule } from '@ngrx/effects';
+import { transactionReducer } from './state/transaction.reducer';
+import { TransactionEffects } from './state/transaction.effects';
 
 const transactionRoutes: Routes = [
   { path: '', component: TransactionListComponent}
@@ -22,7 +24,8 @@ const transactionRoutes: Routes = [
     CdkScrollableModule,
     HttpClientModule,
     RouterModule.forChild(transactionRoutes),
-    StoreModule.forFeature('transactions', {})
+    StoreModule.forFeature('transactions', transactionReducer),
+    EffectsModule.forFeature([TransactionEffects])
   ],
   providers: [TransactionsService]
 })
