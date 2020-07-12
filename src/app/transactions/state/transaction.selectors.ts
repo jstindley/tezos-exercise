@@ -7,3 +7,9 @@ export const getTransactions = createSelector(
     getTransactionFeatureState,
     state => state.transactions
 );
+
+export const getCursor = createSelector(
+    getTransactionFeatureState,
+    state => state.cursor
+);
+

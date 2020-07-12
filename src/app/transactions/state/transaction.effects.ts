@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TransactionsService } from '../services/transactions.service';
 import * as TransactionActions from './transaction.actions';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Transaction } from '../transaction';
 
@@ -13,12 +13,15 @@ export class TransactionEffects {
                  private transactionsService: TransactionsService){}
 
     loadTransactions$ = createEffect(() => {
+        let cursor = '';
         return this.actions$.pipe(
             ofType(TransactionActions.loadTransactions),
-            mergeMap(() => this.transactionsService.getTransactions().pipe(
-                map(transactions => TransactionActions
-                    .loadTransactionsSucess({transactions: this.transformTransaction(transactions).reverse()})
-                ),
+            concatMap(() => this.transactionsService.getTransactions().pipe(
+                map(transactions => {
+                    const transformedTransactions = this.transformTransaction(transactions).reverse();
+                    cursor = transformedTransactions[9].row_id.toString();
+                    return TransactionActions.loadTransactionsSucess({transactions: transformedTransactions, cursor});
+                }),
                 catchError(error => of(TransactionActions.loadTransactionsFailure({error})))
             ))
         );

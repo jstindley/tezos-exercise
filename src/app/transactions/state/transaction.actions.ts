@@ -8,10 +8,15 @@ export const loadTransactions = createAction(
 
 export const loadTransactionsSucess = createAction(
     '[Transaction] Load Success',
-    props<{transactions: Transaction[]}>()
+    props<{transactions: Transaction[], cursor: string}>()
   );
 
 export const loadTransactionsFailure = createAction(
     '[Transaction] Load Failure',
     props<{error: string}>()
   );
+
+export const setCursor = createAction(
+  '[Transaction] Set Cursor',
+  props<{cursor: string}>()
+);

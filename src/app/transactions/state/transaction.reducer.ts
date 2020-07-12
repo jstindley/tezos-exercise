@@ -14,6 +14,7 @@ export const transactionReducer = createReducer<TransactionState>(
         return {
             ...state,
             transactions: action.transactions,
+            cursor: action.cursor,
             error: ''
         };
     }),
@@ -21,7 +22,14 @@ export const transactionReducer = createReducer<TransactionState>(
         return {
             ...state,
             transactions: [],
+            cursor: '',
             error: action.error
+        };
+    }),
+    on(TransactionActions.setCursor, (state, action): TransactionState => {
+        return {
+            ...state,
+            cursor: action.cursor
         };
     })
 );
