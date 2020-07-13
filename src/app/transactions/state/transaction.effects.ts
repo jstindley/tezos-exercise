@@ -52,7 +52,7 @@ export class TransactionEffects {
             transformedTransactions.push(
                 {
                     row_id: transaction[0],
-                    type: transaction[1],
+                    type: transaction[1] = 'transaction' ? 'Received' : transaction[1],
                     amount: transaction[2],
                     date: transaction[3],
                     address: transaction[4]

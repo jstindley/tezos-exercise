@@ -8,6 +8,7 @@ import { Transaction } from '../transaction';
 export class TransactionRowComponent implements OnInit {
 
   @Input() transaction: Transaction;
+  xtzRate = 3.10;
 
   constructor() { }
 

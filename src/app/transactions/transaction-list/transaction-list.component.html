@@ -1,7 +1,19 @@
-<p>transaction-list works! YAY</p>
-<div>
-    <cdk-virtual-scroll-viewport itemSize="10" class="example-viewport"> 
-        <!-- <div *cdkVirtualFor="let item of transactions" class="example-item">{{item || 'Loading...'}}</div>    -->
-         <app-transaction-row *cdkVirtualFor="let transaction of transactions" [transaction]="transaction"></app-transaction-row>
-    </cdk-virtual-scroll-viewport>
+<div style="height: 100%; padding-top: 10vh;">
+    <div class="row transaction-header">
+        <div class="col">
+            <img src="./assets/images/history-24px.svg" alt="recent transactions"/>
+            Recent Transactions
+        </div>
+    </div>
+    <div class="row transaction-header transaction-row-header">
+        <div class="col-1">Type</div>
+        <div class="col-5">Amount XTZ (USD)</div>
+        <div class="col-3">Date</div>
+        <div class="col-1">Address</div>   
+    </div>
+    <div class="row">
+        <cdk-virtual-scroll-viewport itemSize="10" class="transaction-viewport"> 
+            <app-transaction-row *cdkVirtualFor="let transaction of transactions" [transaction]="transaction"></app-transaction-row>
+        </cdk-virtual-scroll-viewport>
+    </div>
 </div>

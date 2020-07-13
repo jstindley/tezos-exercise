@@ -1,11 +1,21 @@
-.example-viewport {
-    height: 200px;
-    width: 1000px;
-    border: 1px solid black;
+.transaction-viewport {
+    height: 50vh;
+    width: 900px;
+    border: 1px solid lightgray;
+    margin: 0 auto;
   }
   
-  .example-item {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  .transaction-row-header {
+    color: gray;
+    background-color: lightgray;
+  }
+
+  .transaction-header{
+    border: 1px solid lightgray; 
+    width: 900px; 
     height: 40px;
+    line-height: 3;
+    text-align: left; 
+    margin: 0 auto;
+    font-size: small;
   }

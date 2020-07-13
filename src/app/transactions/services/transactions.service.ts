@@ -5,7 +5,7 @@ import { Transaction } from '../transaction';
 
 @Injectable()
 export class TransactionsService {
-  private transactionsUrl = 'https://api.tzstats.com/tables/op?columns=row_id,type,volume,time,sender&receiver=tz1gfArv665EUkSg2ojMBzcbfwuPxAvqPvjo&type=transaction&limit=10';
+  private transactionsUrl = 'https://api.tzstats.com/tables/op?columns=row_id,type,volume,time,sender,status&receiver=tz1gfArv665EUkSg2ojMBzcbfwuPxAvqPvjo&type=transaction&limit=10';
   constructor(private http: HttpClient) { }
 
   getTransactions(cursor?): Observable<Transaction[]> {
