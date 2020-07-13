@@ -10,9 +10,10 @@ export class TransactionsService {
 
   getTransactions(cursor?): Observable<Transaction[]> {
     let url = this.transactionsUrl;
-    if (cursor) {
+    if (cursor !== '' && cursor) {
       url += `&cursor.lte=${cursor}`;
     }
+    url += '&order=desc';
     return this.http.get<Transaction[]>(url);
   }
 }

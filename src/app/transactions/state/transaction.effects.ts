@@ -5,25 +5,44 @@ import * as TransactionActions from './transaction.actions';
 import { mergeMap, map, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Transaction } from '../transaction';
+import { Store } from '@ngrx/store';
+import { State } from './transaction-interface';
+import { getCursor } from './transaction.selectors';
 
 @Injectable()
 export class TransactionEffects {
 
     constructor( private actions$: Actions,
-                 private transactionsService: TransactionsService){}
+                 private transactionsService: TransactionsService,
+                 private store: Store<State>){}
 
     loadTransactions$ = createEffect(() => {
-        let cursor = '';
         return this.actions$.pipe(
             ofType(TransactionActions.loadTransactions),
             concatMap(() => this.transactionsService.getTransactions().pipe(
                 map(transactions => {
-                    const transformedTransactions = this.transformTransaction(transactions).reverse();
-                    cursor = transformedTransactions[9].row_id.toString();
-                    return TransactionActions.loadTransactionsSucess({transactions: transformedTransactions, cursor});
+                    const transformedTransactions = this.transformTransaction(transactions);
+                    return TransactionActions.loadTransactionsSucess({transactions: transformedTransactions});
                 }),
                 catchError(error => of(TransactionActions.loadTransactionsFailure({error})))
             ))
+        );
+    });
+
+    loadMoreTransactions$ = createEffect(() => {
+        let cursor;
+        this.store.select(getCursor).subscribe(currentCursor => cursor = currentCursor);
+        return this.actions$.pipe(
+            ofType(TransactionActions.loadMoreTransactions),
+            concatMap(() => {
+                return this.transactionsService.getTransactions(cursor).pipe(
+                    map(transactions => {
+                        const transformedTransactions = this.transformTransaction(transactions);
+                        return TransactionActions.loadMoreTransactionsSuccess({transactions: transformedTransactions});
+                    }),
+                    catchError(error => of(TransactionActions.loadMoreTransactionsFailure({error})))
+                );
+            })
         );
     });
 
@@ -40,6 +59,7 @@ export class TransactionEffects {
                 }
             );
         });
+        this.store.dispatch(TransactionActions.setCursor({cursor: transformedTransactions[9].row_id}));
         return transformedTransactions;
     }
 }

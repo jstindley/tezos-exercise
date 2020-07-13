@@ -4,7 +4,7 @@ import * as TransactionActions from './transaction.actions';
 
 const initialState: TransactionState = {
     transactions: [],
-    cursor: '',
+    cursor: 0,
     error: ''
 };
 
@@ -14,7 +14,6 @@ export const transactionReducer = createReducer<TransactionState>(
         return {
             ...state,
             transactions: action.transactions,
-            cursor: action.cursor,
             error: ''
         };
     }),
@@ -22,7 +21,7 @@ export const transactionReducer = createReducer<TransactionState>(
         return {
             ...state,
             transactions: [],
-            cursor: '',
+            cursor: 0,
             error: action.error
         };
     }),
@@ -30,6 +29,21 @@ export const transactionReducer = createReducer<TransactionState>(
         return {
             ...state,
             cursor: action.cursor
+        };
+    }),
+    on(TransactionActions.loadMoreTransactionsSuccess, (state, action): TransactionState => {
+        return {
+            ...state,
+            transactions: action.transactions,
+            error: ''
+        };
+    }),
+    on(TransactionActions.loadMoreTransactionsFailure, (state, action): TransactionState => {
+        return {
+            ...state,
+            transactions: [],
+            cursor: 0,
+            error: action.error
         };
     })
 );

@@ -13,14 +13,12 @@ export class TransactionSource extends DataSource<Transaction | undefined> {
 
     constructor(private store: Store<State>) {
         super();
-        this.store.dispatch(TransactionActions.loadTransactions());
         this.initFetch();
     }
 
     connect(collectionViewer: CollectionViewer): Observable<(Transaction | undefined)[]> {
         this.subscription.add(collectionViewer.viewChange.subscribe(() => {
-            // get more data
-            this.fetchPage();
+            this.store.dispatch(TransactionActions.loadMoreTransactions());
         }));
 
         return this.dataStream;
@@ -30,20 +28,13 @@ export class TransactionSource extends DataSource<Transaction | undefined> {
       this.subscription.unsubscribe();
     }
 
-    private fetchPage(): void {
-        // change
-        this.store.select(getTransactions).subscribe( transactions => {
-            if (transactions.length > 0 || !transactions) {
-                this.cachedTransactions.push(transactions[0]);
-                this.dataStream.next(this.cachedTransactions);
-            }
-        });
-    }
-
     private initFetch(): void {
+        this.store.dispatch(TransactionActions.loadTransactions());
         this.store.select(getTransactions).subscribe( (transactions: Transaction[]) => {
-                Object.assign(this.cachedTransactions, transactions);
-                this.dataStream.next(this.cachedTransactions);
+            transactions.forEach(transaction => {
+                this.cachedTransactions.push(transaction);
+            });
+            this.dataStream.next(this.cachedTransactions);
         });
     }
 }

@@ -7,6 +7,6 @@ export interface State extends AppState.State {
 
 export interface TransactionState {
     transactions: Transaction[];
-    cursor: string;
+    cursor: number;
     error: string;
 }

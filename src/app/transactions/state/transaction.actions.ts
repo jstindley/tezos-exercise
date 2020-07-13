@@ -8,7 +8,7 @@ export const loadTransactions = createAction(
 
 export const loadTransactionsSucess = createAction(
     '[Transaction] Load Success',
-    props<{transactions: Transaction[], cursor: string}>()
+    props<{transactions: Transaction[]}>()
   );
 
 export const loadTransactionsFailure = createAction(
@@ -18,5 +18,19 @@ export const loadTransactionsFailure = createAction(
 
 export const setCursor = createAction(
   '[Transaction] Set Cursor',
-  props<{cursor: string}>()
+  props<{cursor: number}>()
+);
+
+export const loadMoreTransactions = createAction(
+  '[Transaction] Load more Transactions'
+);
+
+export const loadMoreTransactionsSuccess = createAction(
+  '[Transaction] Load more Transactions Success',
+  props<{transactions: Transaction[]}>()
+);
+
+export const loadMoreTransactionsFailure = createAction(
+  '[Transaction] Load more Transactions Failure',
+  props<{error: string}>()
 );
