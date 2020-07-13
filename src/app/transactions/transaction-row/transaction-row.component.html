@@ -1,3 +1,6 @@
-<div>
-    {{transaction.type}} | {{transaction.amount}} | {{transaction.date | date:'medium'}} | {{transaction.address}} 
+<div class="row">
+    <div class="col"> {{transaction.type}} </div>
+    <div class="col"> {{transaction.amount}} </div>
+    <div class="col"> {{transaction.date | date:'medium'}} </div>
+    <div class="col"> {{(transaction.address | slice:0:2) +'...'+(transaction.address | slice:-4)}}</div>
 </div>
