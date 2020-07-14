@@ -1,17 +1,18 @@
 .transaction-viewport {
     height: 50vh;
     width: 900px;
-    border: 1px solid lightgray;
+    border: 1px solid #F4F4F4;
     margin: 0 auto;
   }
   
   .transaction-row-header {
     color: gray;
-    background-color: lightgray;
+    background-color: #F4F4F4;
+    scroll-padding-left: 10px;
   }
 
   .transaction-header{
-    border: 1px solid lightgray; 
+    border: 1px solid #F4F4F4; 
     width: 900px; 
     height: 40px;
     line-height: 3;
@@ -19,3 +20,13 @@
     margin: 0 auto;
     font-size: small;
   }
+
+
+.column {
+  padding-left: 50px;
+}
+
+.conversion {
+  margin-left: -55px;
+  margin-right: 55px;
+}
